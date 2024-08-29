@@ -17,25 +17,25 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh '/opt/maven/bin/mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh '/opt/maven/bin/mvn test'
             }
         }
 
         stage('Checkstyle') {
             steps {
-                sh 'mvn checkstyle:check'
+                sh '/opt/maven/bin/mvn checkstyle:check'
             }
         }
 
         stage('Dependency Check') {
             steps {
-                sh 'mvn dependency-check:check'
+                sh '/opt/maven/bin/mvn dependency-check:check'
             }
         }
 
