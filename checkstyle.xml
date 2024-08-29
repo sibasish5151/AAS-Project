@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    
+    <!-- Enforces that all source files end with a new line -->
+    <module name="NewlineAtEndOfFile"/>
+
+    <!-- Ensures that there is a package declaration at the top of each file -->
+    <module name="PackageDeclaration"/>
+
+    <!-- Ensures that imports are ordered and organized -->
+    <module name="AvoidStarImport"/>
+
+    <!-- Controls the placement of braces in the code -->
+    <module name="LeftCurly">
+        <property name="option" value="nl"/>
+    </module>
+    <module name="RightCurly">
+        <property name="option" value="alone"/>
+    </module>
+
+    <!-- Checks that blocks (if, while, etc.) are correctly formatted -->
+    <module name="NeedBraces"/>
+    
+    <!-- Controls the maximum number of lines in a file -->
+    <module name="FileLength">
+        <property name="max" value="2000"/>
+    </module>
+
+    <!-- Checks that method names are well-formed and in camelCase -->
+    <module name="MethodName">
+        <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+    </module>
+
+    <!-- Ensures that local variable names are in camelCase -->
+    <module name="LocalVariableName">
+        <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+    </module>
+
+    <!-- Checks that class names are well-formed and in PascalCase -->
+    <module name="TypeName">
+        <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+    </module>
+
+    <!-- Checks for the use of final parameters -->
+    <module name="FinalParameters"/>
+    
+    <!-- Ensures a certain amount of whitespace between elements -->
+    <module name="WhitespaceAfter"/>
+    <module name="WhitespaceAround"/>
+    
+    <!-- Checks that line length does not exceed a maximum -->
+    <module name="LineLength">
+        <property name="max" value="120"/>
+    </module>
+    
+    <!-- Enforces the use of Javadoc comments on classes, methods, and fields -->
+    <module name="JavadocType"/>
+    <module name="JavadocMethod"/>
+    <module name="JavadocVariable"/>
+    
+    <!-- Checks for empty blocks (e.g., empty catch blocks) -->
+    <module name="EmptyBlock"/>
+    
+    <!-- Ensures there are no unused imports -->
+    <module name="UnusedImports"/>
+    
+    <!-- Ensures that there are no multiple consecutive empty lines -->
+    <module name="EmptyLineSeparator"/>
+    
+    <!-- Checks for redundant modifiers in interfaces and classes -->
+    <module name="RedundantModifier"/>
+    
+    <!-- Ensures that there are no magic numbers in the code -->
+    <module name="MagicNumber">
+        <property name="ignoreNumbers" value="0,1,-1"/>
+    </module>
+    
+    <!-- Checks that methods and constructors don't have too many parameters -->
+    <module name="ParameterNumber">
+        <property name="max" value="5"/>
+    </module>
+
+</module>
