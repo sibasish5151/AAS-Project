@@ -3,13 +3,13 @@ pipeline {
 
     environment {
         EC2_USER = 'ubuntu'                   // EC2 instance username
-        EC2_IP = '192.168.1.203'         // EC2 instance IP
+        EC2_IP = '13.201.120.222'         // EC2 instance IP
         SSH_CREDENTIALS_ID = 'Prod-server-cred' // Jenkins credentials ID for SSH key
         TOMCAT_WEBAPPS_DIR = '/opt/tomcat/webapps/' // Path to Tomcat webapps directory
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/sibasish5151/AAS-Project.git'
             }
@@ -54,8 +54,6 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/target/*.war', allowEmptyArchive: true
-            archiveArtifacts artifacts: '**/target/checkstyle-result.xml', allowEmptyArchive: true
-            archiveArtifacts artifacts: '**/target/dependency-check-report.html', allowEmptyArchive: true
         }
         failure {
             mail to: 'sibasish5151@gmail.com',
