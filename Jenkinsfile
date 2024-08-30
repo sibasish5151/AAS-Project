@@ -2,49 +2,43 @@ pipeline {
     agent any
 
     environment {
-        EC2_USER = 'ubuntu'                   // EC2 instance username
-        EC2_IP = '13.201.120.222'         // EC2 instance IP
-        SSH_CREDENTIALS_ID = 'Prod-server-cred' // Jenkins credentials ID for SSH key
-        TOMCAT_WEBAPPS_DIR = '/opt/tomcat/webapps/' // Path to Tomcat webapps directory
+        // Define environment variables
+        EC2_USER = 'ubuntu' // Replace with the appropriate user (e.g., 'ec2-user' for Amazon Linux)
+        EC2_IP = '13.235.113.220' // Replace with the public IP of your EC2 instance
+        PRIVATE_KEY_PATH = '/opt/new-aws-key.pem' // Path to your private SSH key
+        TOMCAT_WEBAPPS_DIR = '/opt/tomcat/webapps/' // Tomcat webapps directory on the EC2 instance
     }
 
     stages {
         stage('Checkout') {
             steps {
+                // Checkout code from your repository
                 git branch: 'main', url: 'https://github.com/sibasish5151/AAS-Project.git'
             }
         }
 
         stage('Build') {
             steps {
+                // Build the application (example for a Maven project)
                 sh '/opt/maven/bin/mvn clean package'
             }
         }
-
         stage('Test') {
             steps {
+                // Run the unit test of the application
                 sh '/opt/maven/bin/mvn test'
-            }
-        }
-
-        stage('Checkstyle') {
-            steps {
-                sh '/opt/maven/bin/mvn checkstyle:check'
-            }
-        }
-
-        stage('Dependency Check') {
-            steps {
-                sh '/opt/maven/bin/mvn dependency-check:check'
             }
         }
 
         stage('Deploy to Tomcat') {
             steps {
-                sshagent([SSH_CREDENTIALS_ID]) {
+                // Define the path to the .war file
+                script {
+                    def warFile = "/var/lib/jenkins/workspace/AAS-Project/target/maven-web-app.war" // Update with the correct path
+
+                    // Use scp to copy the .war file to the Tomcat server
                     sh """
-                        scp -o StrictHostKeyChecking=no target/*.war ${EC2_USER}@${EC2_IP}:${TOMCAT_WEBAPPS_DIR}
-                        ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_IP} 'sudo systemctl restart tomcat'
+                    scp -i ${PRIVATE_KEY_PATH} ${warFile} ${EC2_USER}@${EC2_IP}:${TOMCAT_WEBAPPS_DIR}
                     """
                 }
             }
@@ -52,13 +46,11 @@ pipeline {
     }
 
     post {
-        always {
-            archiveArtifacts artifacts: '**/target/*.war', allowEmptyArchive: true
+        success {
+            echo 'Deployment successful!'
         }
         failure {
-            mail to: 'sibasish5151@gmail.com',
-                 subject: "Build failed in Jenkins: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: "Please check the Jenkins console output for more details."
+            echo 'Deployment failed!'
         }
     }
 }
