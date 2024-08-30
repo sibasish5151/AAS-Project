@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from your repository
-                git branch: 'main', url: 'https://github.com/sibasish5151/AAS-Project.git'
+                git branch: 'staging', url: 'https://github.com/sibasish5151/AAS-Project.git'
             }
         }
 
