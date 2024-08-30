@@ -24,19 +24,6 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.3.1</version>
       </plugin>
-      <plugin>
-        <groupId>org.owasp</groupId>
-        <artifactId>dependency-check-maven</artifactId>
-        <version>8.3.1</version> <!-- Use the latest stable version -->
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.1.2</version> <!-- Use the latest stable version -->
-        <configuration>
-        <configLocation>checkstyle.xml</configLocation> <!-- Point to your Checkstyle config -->
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 </project>
