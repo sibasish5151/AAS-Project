@@ -8,6 +8,7 @@ pipeline {
         SSH_KEY_PATH = '/root/.ssh/id_ed25519' // Path to your private SSH key
         TOMCAT_WEBAPPS_DIR = '/opt/tomcat/webapps/' // Tomcat webapps directory on the EC2 instance
         SSH_CREDENTIALS_ID = 'Prod-server-cred' // Define your credential ID as an environment variable
+        warFile = '/var/lib/jenkins/workspace/AAS-pipeline/target/*.war'
     }
 
     stages {
@@ -35,7 +36,6 @@ pipeline {
             steps {
                 // Use the credential ID in the withCredentials block
                 withCredentials([sshUserPrivateKey(credentialsId: "${SSH_CREDENTIALS_ID}", keyFileVariable: 'SSH_KEY_PATH', usernameVariable: 'SSH_USER')]) {
-                    def warFile = "/var/lib/jenkins/workspace/AAS-pipeline/target/*.war"
                     sh """
                     scp -i ${SSH_KEY_PATH} ${warFile} ${SSH_USER}@${EC2_IP}:${TOMCAT_WEBAPPS_DIR}
                     """
