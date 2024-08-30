@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Define environment variables
         SSH_USER = 'ubuntu' // Replace with the appropriate user (e.g., 'ec2-user' for Amazon Linux)
-        EC2_IP = '13.235.113.220' // Replace with the public IP of your EC2 instance
+        EC2_IP = '65.2.146.43' // Replace with the public IP of your EC2 instance
         SSH_KEY_PATH = '/root/.ssh/new-aws-key.pem' // Path to your private SSH key
         TOMCAT_WEBAPPS_DIR = '/opt/tomcat/webapps/' // Tomcat webapps directory on the EC2 instance
         SSH_CREDENTIALS_ID = 'Prod-server-cred' // Define your credential ID as an environment variable
