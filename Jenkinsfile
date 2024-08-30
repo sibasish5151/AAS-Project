@@ -34,7 +34,7 @@ pipeline {
             steps {
                 // Define the path to the .war file
                 script {
-                    def warFile = "/var/lib/jenkins/workspace/AAS-Project/target/maven-web-app.war" // Update with the correct path
+                    def warFile = "**/target/*.war" // Update with the correct path
 
                     // Use scp to copy the .war file to the Tomcat server
                     sh """
