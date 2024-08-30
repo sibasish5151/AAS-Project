@@ -3,10 +3,11 @@ pipeline {
 
     environment {
         // Define environment variables
-        EC2_USER = 'ubuntu' // Replace with the appropriate user (e.g., 'ec2-user' for Amazon Linux)
+        SSH_USER = 'ubuntu' // Replace with the appropriate user (e.g., 'ec2-user' for Amazon Linux)
         EC2_IP = '13.235.113.220' // Replace with the public IP of your EC2 instance
-        PRIVATE_KEY_PATH = '/root/.ssh/new-aws-key.pem' // Path to your private SSH key
+        SSH_KEY_PATH = '/root/.ssh/id_ed25519' // Path to your private SSH key
         TOMCAT_WEBAPPS_DIR = '/opt/tomcat/webapps/' // Tomcat webapps directory on the EC2 instance
+        SSH_CREDENTIALS_ID = 'Prod-server-cred' // Define your credential ID as an environment variable
     }
 
     stages {
@@ -32,13 +33,11 @@ pipeline {
 
         stage('Deploy to Tomcat') {
             steps {
-                // Define the path to the .war file
-                script {
-                    def warFile = "/var/lib/jenkins/workspace/AAS-pipeline/target/*.war" // Update with the correct path
-
-                    // Use scp to copy the .war file to the Tomcat server
+                // Use the credential ID in the withCredentials block
+                withCredentials([sshUserPrivateKey(credentialsId: "${SSH_CREDENTIALS_ID}", keyFileVariable: 'SSH_KEY_PATH', usernameVariable: 'SSH_USER')]) {
+                    def warFile = "/var/lib/jenkins/workspace/AAS-pipeline/target/*.war"
                     sh """
-                    scp -i ${PRIVATE_KEY_PATH} ${warFile} ${EC2_USER}@${EC2_IP}:${TOMCAT_WEBAPPS_DIR}
+                    scp -i ${SSH_KEY_PATH} ${warFile} ${SSH_USER}@${EC2_IP}:${TOMCAT_WEBAPPS_DIR}
                     """
                 }
             }
