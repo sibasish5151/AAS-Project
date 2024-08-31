@@ -1,0 +1,154 @@
+Started by user admin
+Obtained Jenkinsfile from git https://github.com/sibasish5151/AAS-Project.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Production-pipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/sibasish5151/AAS-Project.git
+ > /usr/bin/git init /var/lib/jenkins/workspace/Production-pipeline # timeout=10
+Fetching upstream changes from https://github.com/sibasish5151/AAS-Project.git
+ > /usr/bin/git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > /usr/bin/git fetch --tags --force --progress -- https://github.com/sibasish5151/AAS-Project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > /usr/bin/git config remote.origin.url https://github.com/sibasish5151/AAS-Project.git # timeout=10
+ > /usr/bin/git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > /usr/bin/git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 64606b1aa3414b8aeae7ce115af2ecda5633789f (refs/remotes/origin/main)
+ > /usr/bin/git config core.sparsecheckout # timeout=10
+ > /usr/bin/git checkout -f 64606b1aa3414b8aeae7ce115af2ecda5633789f # timeout=10
+Commit message: "Update Jenkinsfile"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > /usr/bin/git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Production-pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > /usr/bin/git config remote.origin.url https://github.com/sibasish5151/AAS-Project.git # timeout=10
+Fetching upstream changes from https://github.com/sibasish5151/AAS-Project.git
+ > /usr/bin/git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > /usr/bin/git fetch --tags --force --progress -- https://github.com/sibasish5151/AAS-Project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > /usr/bin/git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 64606b1aa3414b8aeae7ce115af2ecda5633789f (refs/remotes/origin/main)
+ > /usr/bin/git config core.sparsecheckout # timeout=10
+ > /usr/bin/git checkout -f 64606b1aa3414b8aeae7ce115af2ecda5633789f # timeout=10
+ > /usr/bin/git branch -a -v --no-abbrev # timeout=10
+ > /usr/bin/git checkout -b main 64606b1aa3414b8aeae7ce115af2ecda5633789f # timeout=10
+Commit message: "Update Jenkinsfile"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ /opt/maven/bin/mvn clean package
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< in.ashokit:01-maven-web-app >---------------------
+[INFO] Building 01-maven-web-app 3.0-RELEASE
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ 01-maven-web-app ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ 01-maven-web-app ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/Production-pipeline/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ 01-maven-web-app ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ 01-maven-web-app ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/Production-pipeline/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ 01-maven-web-app ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ 01-maven-web-app ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- war:3.3.1:war (default-war) @ 01-maven-web-app ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [01-maven-web-app] in [/var/lib/jenkins/workspace/Production-pipeline/target/maven-web-app]
+[INFO] Processing war project
+[INFO] Copying webapp resources [/var/lib/jenkins/workspace/Production-pipeline/src/main/webapp]
+[INFO] Building war: /var/lib/jenkins/workspace/Production-pipeline/target/maven-web-app.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.241 s
+[INFO] Finished at: 2024-08-31T05:36:26Z
+[INFO] ------------------------------------------------------------------------
+Post stage
+[Pipeline] echo
+Archiving the Artifacts
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ /opt/maven/bin/mvn test
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< in.ashokit:01-maven-web-app >---------------------
+[INFO] Building 01-maven-web-app 3.0-RELEASE
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ 01-maven-web-app ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/Production-pipeline/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ 01-maven-web-app ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ 01-maven-web-app ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/Production-pipeline/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ 01-maven-web-app ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ 01-maven-web-app ---
+[INFO] No tests to run.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.606 s
+[INFO] Finished at: 2024-08-31T05:36:30Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Tomcat)
+[Pipeline] deploy
+[DeployPublisher][INFO] Attempting to deploy 1 war file(s)
+[DeployPublisher][INFO] Deploying /var/lib/jenkins/workspace/Production-pipeline/target/maven-web-app.war to container Tomcat 9.x Remote with context null
+  Redeploying [/var/lib/jenkins/workspace/Production-pipeline/target/maven-web-app.war]
+  Undeploying [/var/lib/jenkins/workspace/Production-pipeline/target/maven-web-app.war]
+  Deploying [/var/lib/jenkins/workspace/Production-pipeline/target/maven-web-app.war]
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
